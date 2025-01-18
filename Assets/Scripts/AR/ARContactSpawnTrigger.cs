@@ -1,8 +1,8 @@
+using UnityEngine;
 using UnityEngine.XR.ARSubsystems;
 using UnityEngine.XR.ARFoundation;
-using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 
-namespace UnityEngine.XR.Interaction.Toolkit.Samples.ARStarterAssets
+namespace SnakeWorks
 {
     /// <summary>
     /// Spawns an object on physics trigger enter with an <see cref="ARPlane"/>, at the point of contact on the plane.
@@ -12,12 +12,12 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.ARStarterAssets
     {
         [SerializeField]
         [Tooltip("The behavior to use to spawn objects.")]
-        ObjectSpawner m_ObjectSpawner;
+        ARObjectManager m_ObjectSpawner;
 
         /// <summary>
         /// The behavior to use to spawn objects.
         /// </summary>
-        public ObjectSpawner objectSpawner
+        public ARObjectManager objectSpawner
         {
             get => m_ObjectSpawner;
             set => m_ObjectSpawner = value;
@@ -42,11 +42,9 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.ARStarterAssets
         void Start()
         {
             if (m_ObjectSpawner == null)
-#if UNITY_2023_1_OR_NEWER
-                m_ObjectSpawner = FindAnyObjectByType<ObjectSpawner>();
-#else
-                m_ObjectSpawner = FindObjectOfType<ObjectSpawner>();
-#endif
+            {
+                m_ObjectSpawner = FindAnyObjectByType<ARObjectManager>();
+            }
         }
 
         /// <summary>
@@ -59,7 +57,7 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.ARStarterAssets
 
             var infinitePlane = new Plane(surfaceNormal, surfacePosition);
             var contactPoint = infinitePlane.ClosestPointOnPlane(transform.position);
-            m_ObjectSpawner.TrySpawnObject(contactPoint, surfaceNormal);
+            //m_ObjectSpawner.TrySpawnObject(contactPoint, surfaceNormal);
         }
 
         /// <summary>

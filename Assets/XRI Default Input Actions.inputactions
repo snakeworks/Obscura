@@ -3019,7 +3019,16 @@
                     "name": "Spawn Object",
                     "type": "Button",
                     "id": "1415f3c5-fc5f-4f58-a044-4a69560151f2",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Tap Single",
+                    "type": "Button",
+                    "id": "7015bb91-66ca-46f4-8a89-babe902e7c0b",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -3309,6 +3318,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "Spawn Object",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "d4369876-1a8f-40e8-92f7-daf87c58fa78",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "Tap",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tap Single",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "One Modifier",
+                    "id": "999ce9e7-787a-4360-b681-72b97ed80a3c",
+                    "path": "OneModifier",
+                    "interactions": "Tap",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tap Single",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "0fae4122-9351-4d00-b509-6051e6837417",
+                    "path": "<Mouse>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tap Single",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "3e473d20-90b0-4927-904b-30a226fedfb1",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tap Single",
                     "isComposite": false,
                     "isPartOfComposite": true
                 }

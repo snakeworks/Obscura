@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Rendering;
 
-namespace Unity.AR.Companion.Mobile
+namespace SnakeWorks
 {
     class CutoutMaskUI : Image
     {
