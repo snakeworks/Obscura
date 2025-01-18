@@ -519,7 +519,7 @@ MonoBehaviour:
       m_Name: Spawn Object
       m_Type: 1
       m_ExpectedControlType: 
-      m_Id: 990fa9ab-99f8-45a6-9d39-887e06052f26
+      m_Id: 662a093d-8e09-4cf6-bfd6-49a45c5a8f79
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -528,7 +528,7 @@ MonoBehaviour:
       m_Name: Spawn Object Value
       m_Type: 0
       m_ExpectedControlType: Axis
-      m_Id: 4ae9bb9b-10c3-465e-91ce-f51080d4cda4
+      m_Id: b0cd6c19-8189-4a59-ad0b-ad8c43e60d3c
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
