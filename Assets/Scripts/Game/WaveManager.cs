@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 namespace SnakeWorks
@@ -6,6 +7,7 @@ namespace SnakeWorks
     public class WaveManager : MonoBehaviour
     {
         [SerializeField] private EnemyBody _enemyPrefab;
+        [SerializeField] private TextMeshProUGUI _roundText;
 
         public int CurrentWave { get; private set; } = 0;
         public int EnemiesLeftCount { get; private set; }
@@ -28,6 +30,7 @@ namespace SnakeWorks
         void NextWave()
         {
             CurrentWave += 1;
+            _roundText.SetText(CurrentWave.ToString());
             EnemiesToSpawnCount = CurrentWave * 5;
             EnemiesLeftCount = EnemiesToSpawnCount;
             EnemiesSpawnedCount = 0;

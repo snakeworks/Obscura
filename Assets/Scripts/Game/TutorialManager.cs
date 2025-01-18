@@ -22,9 +22,9 @@ namespace SnakeWorks
 
         void DeleteField()
         {
-            if (ARObjectManager.Instance.SpawnedObjects.Count > 0)
+            if (GameManager.Instance.PlayingField == null)
             {
-                ARObjectManager.Instance.DestroyObject(GameManager.Instance.PlayingField.gameObject);
+                Destroy(GameManager.Instance.PlayingField.gameObject);
             }
         }
 
@@ -48,9 +48,9 @@ namespace SnakeWorks
                     break;
                 case GameState.PlacingPlayingField:
                     if (GameManager.Instance.TapAction.ReadWasPerformedThisFrame() 
-                        && ARObjectManager.Instance.SpawnedObjects.Count <= 0)
+                        && GameManager.Instance.PlayingField == null)
                     {
-                        ARObjectManager.Instance.TrySpawnObjectRaycast(_playingField);
+                        GameManager.Instance.PlayingField = ARObjectManager.Instance.TrySpawnObjectRaycast(_playingField).GetComponent<PlayingField>();
                     }
                     break;
             }
@@ -67,7 +67,7 @@ namespace SnakeWorks
                     _gameScreen.SetActive(false);
                     break;
                 case GameState.PlacingPlayingField:
-                    if (ARObjectManager.Instance.SpawnedObjects.Count > 0)
+                    if (GameManager.Instance.PlayingField != null)
                     {
                         _deleteButton.gameObject.SetActive(true);
                         _startButton.gameObject.SetActive(true);

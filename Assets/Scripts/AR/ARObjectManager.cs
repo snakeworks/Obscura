@@ -16,8 +16,6 @@ namespace SnakeWorks
 
         public XRRayInteractor Interactor => _arInteractor;
 
-        public List<GameObject> SpawnedObjects { get; private set; } = new();
-
         private Camera _camera;
 
         void Awake()
@@ -26,21 +24,21 @@ namespace SnakeWorks
             _camera = Camera.main;
         }
 
-        public bool TrySpawnObjectRaycast(GameObject prefab)
+        public GameObject TrySpawnObjectRaycast(GameObject prefab)
         {
             var isPointerOverUI = EventSystem.current != null && EventSystem.current.IsPointerOverGameObject(-1);
             if (!isPointerOverUI && _arInteractor.TryGetCurrentARRaycastHit(out var arRaycastHit))
             {
                 if (arRaycastHit.trackable is not ARPlane arPlane)
                 {
-                    return false;
+                    return null;
                 }
                 return TrySpawnObject(prefab, arRaycastHit.pose.position, arPlane.normal);
             }
-            return false;
+            return null;
         }
 
-        public bool TrySpawnObject(GameObject prefab, Vector3 spawnPoint, Vector3 spawnNormal)
+        public GameObject TrySpawnObject(GameObject prefab, Vector3 spawnPoint, Vector3 spawnNormal)
         {
             var inViewMin = _viewportPeriphery;
             var inViewMax = 1f - _viewportPeriphery;
@@ -48,11 +46,10 @@ namespace SnakeWorks
             if (pointInViewportSpace.z < 0f || pointInViewportSpace.x > inViewMax || pointInViewportSpace.x < inViewMin ||
                 pointInViewportSpace.y > inViewMax || pointInViewportSpace.y < inViewMin)
             {
-                return false;
+                return null;
             }
 
             var newObject = Instantiate(prefab);
-            SpawnedObjects.Add(newObject);
             newObject.transform.position = spawnPoint;
 
             var facePosition = _camera.transform.position;
@@ -60,13 +57,7 @@ namespace SnakeWorks
             BurstMathUtility.ProjectOnPlane(forward, spawnNormal, out var projectedForward);
             newObject.transform.rotation = Quaternion.LookRotation(projectedForward, spawnNormal);
 
-            return true;
-        }
-
-        public void DestroyObject(GameObject gameObject)
-        {
-            SpawnedObjects.Remove(gameObject);
-            Destroy(gameObject);
+            return newObject;
         }
     }
 }
