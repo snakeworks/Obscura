@@ -1878,11 +1878,11 @@ MonoBehaviour:
     Price: 1000
     Amount: 0
     MaxAmount: 20
-  - Id: laser_gun
-    Name: Laser Gun
+  - Id: turret
+    Name: Turret
     Icon: {fileID: 21300000, guid: 40aba8893ae5fc248a3487efeab620d0, type: 3}
     Description: Summons a laser gun that deals damage to enemies when in range.
-    Price: 800
+    Price: 1500
     Amount: 0
     MaxAmount: 4
   _shopItemUIPrefab: {fileID: 3666541783271063298, guid: 6847912545fc0644fadd67d321773e4d,
