@@ -1,9 +1,9 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using UnityEngine.XR.Interaction.Toolkit.Utilities;
+using UnityEngine.XR.Interaction.Toolkit.Inputs.Readers;
 
 namespace SnakeWorks
 {
@@ -11,6 +11,7 @@ namespace SnakeWorks
     {
         public static ARObjectManager Instance { get; private set; }
 
+        [SerializeField] private XRInputValueReader<Vector2> _tapPositionAction;
         [SerializeField] private XRRayInteractor _arInteractor;
         [SerializeField] private float _viewportPeriphery = 0.15f;
 
@@ -22,6 +23,18 @@ namespace SnakeWorks
         {
             Instance = this;
             _camera = Camera.main;
+        }
+
+        public GameObject GetRaycastHit(Vector2 screenPosition, LayerMask layerMask)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(screenPosition);
+
+            if (Physics.Raycast(ray, out RaycastHit hitObject, Mathf.Infinity, layerMask))
+            {
+                return hitObject.transform.gameObject;
+            }
+
+            return null;
         }
 
         public GameObject TrySpawnObjectRaycast(GameObject prefab)

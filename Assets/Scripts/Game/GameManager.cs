@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.Interaction.Toolkit.Inputs.Readers;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
@@ -11,6 +12,7 @@ namespace SnakeWorks
         public static GameManager Instance { get; private set; }
 
         [SerializeField] public XRInputButtonReader TapAction;
+        [SerializeField] public InputActionReference TapRaycast;
         [SerializeField] private ARPlaneManager _arPlaneManager;
 
         public GameState CurrentGamestate { get; private set; } = GameState.Welcome;
@@ -42,6 +44,7 @@ namespace SnakeWorks
                     trackable.gameObject.GetComponent<MeshRenderer>().materials = Array.Empty<Material>();
                 }
                 _arPlaneManager.enabled = false;
+                PlayingField.Base.SetActive(true);
                 PlayingField.Highlight.SetActive(false);
                 PlayingField.GetComponent<XRGrabInteractable>().enabled = false;
             }

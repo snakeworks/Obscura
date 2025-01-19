@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -5239199997964506414}
   - component: {fileID: 5439249348230491102}
   - component: {fileID: 6755409727546320446}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EnemyGabriel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,6 +50,8 @@ MonoBehaviour:
   _health: 3
   _damage: 1
   _speed: 1
+  _meshRenderer: {fileID: 5568549572134063409}
+  _flashMaterial: {fileID: 2100000, guid: 88ec891e3ea4dc849ad9a6c2cf01c6d4, type: 2}
 --- !u!65 &5439249348230491102
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -109,7 +111,7 @@ GameObject:
   - component: {fileID: 5922225971163680073}
   - component: {fileID: 3948525503120164265}
   - component: {fileID: 5568549572134063409}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}

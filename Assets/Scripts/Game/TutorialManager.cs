@@ -12,6 +12,13 @@ namespace SnakeWorks
         [SerializeField] private Button _startButton;
         [SerializeField] private GameObject _playingField;
 
+        void Awake()
+        {
+            _welcomeScreen.SetActive(false);
+            _placeFieldScreen.SetActive(false);
+            _gameScreen.SetActive(false);
+        }
+
         void Start()
         {
             UpdateUI();
@@ -22,7 +29,7 @@ namespace SnakeWorks
 
         void DeleteField()
         {
-            if (GameManager.Instance.PlayingField == null)
+            if (GameManager.Instance.PlayingField != null)
             {
                 Destroy(GameManager.Instance.PlayingField.gameObject);
             }
@@ -50,7 +57,12 @@ namespace SnakeWorks
                     if (GameManager.Instance.TapAction.ReadWasPerformedThisFrame() 
                         && GameManager.Instance.PlayingField == null)
                     {
-                        GameManager.Instance.PlayingField = ARObjectManager.Instance.TrySpawnObjectRaycast(_playingField).GetComponent<PlayingField>();
+                        GameManager.Instance.PlayingField = ARObjectManager.Instance.TrySpawnObjectRaycast(_playingField)?.GetComponent<PlayingField>();
+                        if (GameManager.Instance.PlayingField != null)
+                        {
+                            GameManager.Instance.PlayingField.Highlight.SetActive(true);
+                            GameManager.Instance.PlayingField.Base.SetActive(false);
+                        }
                     }
                     break;
             }
@@ -62,9 +74,7 @@ namespace SnakeWorks
             switch (GameManager.Instance.CurrentGamestate)
             {
                 case GameState.Welcome:
-                    _welcomeScreen.SetActive(true);
-                    _placeFieldScreen.SetActive(false);
-                    _gameScreen.SetActive(false);
+                    UIManager.OpenScreen(_welcomeScreen);
                     break;
                 case GameState.PlacingPlayingField:
                     if (GameManager.Instance.PlayingField != null)
@@ -77,14 +87,10 @@ namespace SnakeWorks
                         _deleteButton.gameObject.SetActive(false);
                         _startButton.gameObject.SetActive(false);
                     }
-                    _welcomeScreen.SetActive(false);
-                    _placeFieldScreen.SetActive(true);
-                    _gameScreen.SetActive(false);
+                    UIManager.OpenScreen(_placeFieldScreen);
                     break;
                 case GameState.Playing:
-                    _welcomeScreen.SetActive(false);
-                    _placeFieldScreen.SetActive(false);
-                    _gameScreen.SetActive(true);
+                    UIManager.OpenScreen(_gameScreen);
                     break;
             }
         }

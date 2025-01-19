@@ -3026,9 +3026,9 @@
                 },
                 {
                     "name": "Tap Single",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "7015bb91-66ca-46f4-8a89-babe902e7c0b",
-                    "expectedControlType": "",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false

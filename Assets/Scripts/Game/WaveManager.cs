@@ -8,6 +8,7 @@ namespace SnakeWorks
     {
         [SerializeField] private EnemyBody _enemyPrefab;
         [SerializeField] private TextMeshProUGUI _roundText;
+        [SerializeField] private TextMeshProUGUI _gameOverRoundText;
 
         public int CurrentWave { get; private set; } = 0;
         public int EnemiesLeftCount { get; private set; }
@@ -31,6 +32,7 @@ namespace SnakeWorks
         {
             CurrentWave += 1;
             _roundText.SetText(CurrentWave.ToString());
+            _gameOverRoundText.SetText(_roundText.text);
             EnemiesToSpawnCount = CurrentWave * 5;
             EnemiesLeftCount = EnemiesToSpawnCount;
             EnemiesSpawnedCount = 0;
@@ -39,7 +41,8 @@ namespace SnakeWorks
 
         IEnumerator SpawnEnemy()
         {
-            if (EnemiesSpawnedCount >= EnemiesToSpawnCount)
+            if (EnemiesSpawnedCount >= EnemiesToSpawnCount
+                || GameManager.Instance.CurrentGamestate != GameState.Playing)
             {
                 yield break;
             }
@@ -67,6 +70,10 @@ namespace SnakeWorks
 
         void OnEnemyDied()
         {
+            if (GameManager.Instance.CurrentGamestate != GameState.Playing)
+            {
+                return;
+            }
             EnemiesLeftCount -= 1;
             if (EnemiesLeftCount <= 0)
             {
