@@ -1,3 +1,4 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +14,7 @@ namespace SnakeWorks
         [SerializeField] private int _damage = 1;
         [SerializeField] private int _points = 0;
         [SerializeField] private TextMeshProUGUI _pointsText;
+        [SerializeField] private TextMeshProUGUI _pointsFloatingTextPrefab;
         [SerializeField] private GameObject _gameOverScreen;
         [SerializeField] private LayerMask _enemyLayer;
         
@@ -63,6 +65,22 @@ namespace SnakeWorks
         {
             _points += value;
             _pointsText.SetText(_points.ToString("N0"));
+
+            TextMeshProUGUI floatingText = Instantiate(_pointsFloatingTextPrefab, _pointsText.transform);
+            floatingText.SetText($"+{value:N0}");
+            
+            floatingText.transform.localPosition = new Vector3(
+                floatingText.transform.localPosition.x + 60,
+                floatingText.transform.localPosition.y,
+                floatingText.transform.localPosition.z
+            );
+            floatingText.transform.DOLocalMoveY(floatingText.transform.localPosition.y + 50, 0.5f)
+            .SetEase(Ease.Linear)
+            .OnComplete(() => 
+            {
+                Destroy(floatingText.gameObject);
+            });
+            floatingText.DOFade(0, 0.25f).SetDelay(0.25f);
         }
 
         void Update()

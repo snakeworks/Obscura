@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,7 @@ namespace SnakeWorks
         [SerializeField] private GameObject _welcomeScreen;
         [SerializeField] private GameObject _placeFieldScreen;
         [SerializeField] private GameObject _gameScreen;
+        [SerializeField] private GameObject _tapTutorial;
         [SerializeField] private Button _deleteButton;
         [SerializeField] private Button _startButton;
         [SerializeField] private GameObject _playingField;
@@ -91,6 +93,11 @@ namespace SnakeWorks
                     break;
                 case GameState.Playing:
                     UIManager.OpenScreen(_gameScreen);
+                    _tapTutorial.transform.DOMoveX(_tapTutorial.transform.position.x, 3.0f)
+                    .OnComplete(() =>
+                    {
+                        Destroy(_tapTutorial);
+                    });
                     break;
             }
         }

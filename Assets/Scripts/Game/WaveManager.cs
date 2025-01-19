@@ -6,7 +6,7 @@ namespace SnakeWorks
 {
     public class WaveManager : MonoBehaviour
     {
-        [SerializeField] private EnemyBody _enemyPrefab;
+        [SerializeField] private EnemyBody[] _enemyPrefabs;
         [SerializeField] private TextMeshProUGUI _roundText;
         [SerializeField] private TextMeshProUGUI _gameOverRoundText;
 
@@ -49,9 +49,10 @@ namespace SnakeWorks
                 var posLength = GameManager.Instance.PlayingField.EnemySpawnPositions.Length;
                 var randPosIndex = Random.Range(0, posLength);
                 var randPos = GameManager.Instance.PlayingField.EnemySpawnPositions[randPosIndex];
-                
+                var randPrefab = Random.Range(0, _enemyPrefabs.Length);     
+
                 var enemyBody = Instantiate(
-                    _enemyPrefab,
+                    _enemyPrefabs[randPrefab],
                     randPos.position,
                     randPos.rotation,
                     GameManager.Instance.PlayingField.transform

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5439249348230491102}
   - component: {fileID: 6755409727546320446}
   m_Layer: 6
-  m_Name: EnemyGabriel
+  m_Name: EnemyNika
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da1c4bc9a09cfda45a5f3bdd0a9de3b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 1
+  _health: 2
   _damage: 1
   _pointValue: 10
   _speed: 1
@@ -167,7 +167,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 09f43ec6b5422214aa3dedad7281a5d7, type: 2}
+  - {fileID: 2100000, guid: 27551997fdbc3284aa17c6c796bdbfa9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
