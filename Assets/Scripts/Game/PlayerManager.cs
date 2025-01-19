@@ -11,6 +11,8 @@ namespace SnakeWorks
         [SerializeField] private int _health;
         [SerializeField] private int _maxHealth = 100;
         [SerializeField] private int _damage = 1;
+        [SerializeField] private int _points = 0;
+        [SerializeField] private TextMeshProUGUI _pointsText;
         [SerializeField] private GameObject _gameOverScreen;
         [SerializeField] private LayerMask _enemyLayer;
         
@@ -55,6 +57,12 @@ namespace SnakeWorks
             {
                 GameManager.Instance.SetState(GameState.Dead);
             }
+        }
+
+        public void AddPoints(int value)
+        {
+            _points += value;
+            _pointsText.SetText(_points.ToString("N0"));
         }
 
         void Update()

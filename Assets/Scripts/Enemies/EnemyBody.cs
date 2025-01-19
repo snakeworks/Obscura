@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SocialPlatforms;
 
 namespace SnakeWorks
 {
@@ -9,6 +8,7 @@ namespace SnakeWorks
     {
         [SerializeField] private int _health = 3;
         [SerializeField] private int _damage = 1;
+        [SerializeField] private int _pointValue = 10;
         [SerializeField] private float _speed = 5.0f;
         [SerializeField] private MeshRenderer _meshRenderer;
         [SerializeField] private Collider _collider;
@@ -42,6 +42,7 @@ namespace SnakeWorks
             _health -= damage;
             if (_health <= 0)
             {
+                PlayerManager.Instance.AddPoints(_pointValue);
                 Die();
             }
             else
