@@ -66,7 +66,7 @@ Material:
     - _DotLayoutScale: 15
     - _DotScale: 1.5
     - _DotSize: 15
-    - _PlaneAlpha: 1
+    - _PlaneAlpha: 0.5
     - _PlaneFresnel: 1
     - _PlaneOpacity: 0.5
     - _QueueControl: 1
