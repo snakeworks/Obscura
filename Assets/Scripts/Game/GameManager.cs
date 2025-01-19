@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.Interaction.Toolkit.Inputs.Readers;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
@@ -12,7 +11,7 @@ namespace SnakeWorks
         public static GameManager Instance { get; private set; }
 
         [SerializeField] public XRInputButtonReader TapAction;
-        [SerializeField] public InputActionReference TapRaycast;
+        [SerializeField] public XRInputValueReader<Vector2> TapRaycast;
         [SerializeField] private ARPlaneManager _arPlaneManager;
 
         public GameState CurrentGamestate { get; private set; } = GameState.Welcome;

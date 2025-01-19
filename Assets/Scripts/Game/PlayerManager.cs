@@ -64,7 +64,7 @@ namespace SnakeWorks
                 return;
             }
 
-            var screenRaycast = GameManager.Instance.TapRaycast.action.ReadValue<Vector2>();
+            var screenRaycast = GameManager.Instance.TapRaycast.ReadValue();
             if (screenRaycast != Vector2.zero)
             {
                 _lastScreenPosition = screenRaycast;

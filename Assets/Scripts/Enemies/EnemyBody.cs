@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 namespace SnakeWorks
 {
@@ -10,7 +11,9 @@ namespace SnakeWorks
         [SerializeField] private int _damage = 1;
         [SerializeField] private float _speed = 5.0f;
         [SerializeField] private MeshRenderer _meshRenderer;
+        [SerializeField] private Collider _collider;
         [SerializeField] private Material _flashMaterial;
+        [SerializeField] private Shader _dissolveShader;
 
         public int Health => _health;
         public int Damage => _damage;
@@ -21,7 +24,7 @@ namespace SnakeWorks
 
         private Action _onDeathAction;
 
-
+        private bool _isDead = false;
 
         public void Init(Action onDeathAction)
         {
@@ -51,12 +54,30 @@ namespace SnakeWorks
 
         void Die()
         {
+            _isDead = true;
             _onDeathAction?.Invoke();
-            Destroy(gameObject);
+            _meshRenderer.material = _flashMaterial;
+            float dissolveProgress = 0.25f;
+            StartCoroutine(DeathAnim());
+            IEnumerator DeathAnim()
+            {
+                _meshRenderer.material.shader = _dissolveShader;
+                while (dissolveProgress < 1.0f)
+                {
+                    dissolveProgress += Time.deltaTime * 3.5f;
+                    _meshRenderer.material.SetFloat("_DissolveThreshold", dissolveProgress);
+                    yield return null;
+                }
+                Destroy(gameObject);
+            }
         }
 
         void Update()
         {
+            if (_isDead)
+            {
+                return;
+            }
             transform.localPosition = new Vector3(
                 transform.localPosition.x,
                 transform.localPosition.y,

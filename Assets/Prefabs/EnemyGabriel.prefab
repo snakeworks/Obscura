@@ -47,11 +47,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da1c4bc9a09cfda45a5f3bdd0a9de3b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 3
+  _health: 2
   _damage: 1
   _speed: 1
   _meshRenderer: {fileID: 5568549572134063409}
+  _collider: {fileID: 5439249348230491102}
   _flashMaterial: {fileID: 2100000, guid: 88ec891e3ea4dc849ad9a6c2cf01c6d4, type: 2}
+  _dieMaterial: {fileID: 2100000, guid: 4723022f125e90d43bce33d4dbeed782, type: 2}
+  _dissolveShader: {fileID: 4800000, guid: d35429deae61e4b4e99da10d843ed3f4, type: 3}
 --- !u!65 &5439249348230491102
 BoxCollider:
   m_ObjectHideFlags: 0
