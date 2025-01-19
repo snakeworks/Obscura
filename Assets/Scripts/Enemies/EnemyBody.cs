@@ -10,6 +10,7 @@ namespace SnakeWorks
         [SerializeField] private int _damage = 1;
         [SerializeField] private int _pointValue = 10;
         [SerializeField] private float _speed = 5.0f;
+        [SerializeField] private int _startingRound = 1;
         [SerializeField] private MeshRenderer _meshRenderer;
         [SerializeField] private Collider _collider;
         [SerializeField] private Material _flashMaterial;
@@ -18,6 +19,7 @@ namespace SnakeWorks
         public int Health => _health;
         public int Damage => _damage;
         public float Speed => _speed;
+        public int StartingRound => _startingRound;
 
         private Material _enemyMat;
         private WaitForSeconds _flashSeconds = new(0.03f);

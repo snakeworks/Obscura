@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -9,6 +10,8 @@ namespace SnakeWorks
         [SerializeField] private EnemyBody[] _enemyPrefabs;
         [SerializeField] private TextMeshProUGUI _roundText;
         [SerializeField] private TextMeshProUGUI _gameOverRoundText;
+
+        private List<EnemyBody> _spawnableEnemyPrefabs = new();
 
         public int CurrentWave { get; private set; } = 0;
         public int EnemiesLeftCount { get; private set; }
@@ -37,6 +40,16 @@ namespace SnakeWorks
             EnemiesToSpawnCount = CurrentWave * 5;
             EnemiesLeftCount = EnemiesToSpawnCount;
             UpdateEnemyCountUI();
+
+            _spawnableEnemyPrefabs.Clear();
+            foreach (var enemy in _enemyPrefabs)
+            {
+                if (enemy.StartingRound <= CurrentWave)
+                {
+                    _spawnableEnemyPrefabs.Add(enemy);
+                }
+            }
+
             StartCoroutine(SpawnEnemy());
         }
 
@@ -49,10 +62,10 @@ namespace SnakeWorks
                 var posLength = GameManager.Instance.PlayingField.EnemySpawnPositions.Length;
                 var randPosIndex = Random.Range(0, posLength);
                 var randPos = GameManager.Instance.PlayingField.EnemySpawnPositions[randPosIndex];
-                var randPrefab = Random.Range(0, _enemyPrefabs.Length);     
+                var randPrefab = Random.Range(0, _spawnableEnemyPrefabs.Count);     
 
                 var enemyBody = Instantiate(
-                    _enemyPrefabs[randPrefab],
+                    _spawnableEnemyPrefabs[randPrefab],
                     randPos.position,
                     randPos.rotation,
                     GameManager.Instance.PlayingField.transform
