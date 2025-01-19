@@ -10,13 +10,15 @@ namespace SnakeWorks
     {
         public static PlayerManager Instance { get; private set; }
 
-        [SerializeField] private int _health;
-        [SerializeField] private int _maxHealth = 100;
         [SerializeField] private int _points = 0;
         [SerializeField] private TextMeshProUGUI _pointsText;
         [SerializeField] private TextMeshProUGUI _pointsFloatingTextPrefab;
         [SerializeField] private GameObject _gameOverScreen;
         [SerializeField] private LayerMask _enemyLayer;
+        
+        private int _health;
+        private int _maxHealth = 100;
+        private ShopItem _healthUpItem;
         
         public int Points => _points;
 
@@ -24,7 +26,7 @@ namespace SnakeWorks
         {
             get
             {
-                var amount = ShopManager.Instance.GetItemAmount("tap_damage");
+                var amount = ShopManager.Instance.GetItem("tap_damage").Amount;
                 return amount > 0 ? amount+1 : 1;
             }
         }
@@ -39,11 +41,12 @@ namespace SnakeWorks
         void Awake()
         {
             Instance = this;
-            _health = _maxHealth;
         }
 
         void Start()
         {
+            _healthUpItem = ShopManager.Instance.GetItem("health_up");
+            _healthUpItem.Purchased += UpdateMaxHealth;
             GameManager.Instance.GameStateChanged += OnGameStateChanged;
         }
 
@@ -51,7 +54,7 @@ namespace SnakeWorks
         {
             if (GameManager.Instance.CurrentGamestate == GameState.Playing)
             {
-                UpdateHealthUI();
+                UpdateMaxHealth();
             }
             else if (GameManager.Instance.CurrentGamestate == GameState.Dead)
             {
@@ -101,6 +104,19 @@ namespace SnakeWorks
             floatingText.DOFade(0, 0.25f).SetDelay(0.25f);
         }
 
+        void UpdateMaxHealth()
+        {
+            _maxHealth = _healthUpItem.Amount > 0 ? (_healthUpItem.Amount * 5) + 100 : 100;
+            _health = _maxHealth;
+            UpdateHealthUI();
+        }
+        void UpdateHealthUI()
+        {
+            _healthSlider.maxValue = _maxHealth;
+            _healthSlider.value = _health;
+            _healthText.SetText($"{_health}/{_maxHealth}");
+        }
+
         void Update()
         {
             if (GameManager.Instance.CurrentGamestate != GameState.Playing)
@@ -122,13 +138,6 @@ namespace SnakeWorks
                     hit.GetComponent<EnemyBody>().TakeDamage(Damage);
                 }
             }
-        }
-
-        void UpdateHealthUI()
-        {
-            _healthSlider.maxValue = _maxHealth;
-            _healthSlider.value = _health;
-            _healthText.SetText($"{_health}/{_maxHealth}");
         }
     }
 }

@@ -32,19 +32,20 @@ namespace SnakeWorks
 
         public bool Purchase(ShopItem item)
         {
-            if (PlayerManager.Instance.Points < item.Price)
+            if (PlayerManager.Instance.Points < item.Price || item.Amount >= item.MaxAmount)
             {
                 return false;
             }
 
             item.Amount++;
+            item.OnPurchase();
             PlayerManager.Instance.AddPoints(-item.Price);
             return true;
         }
 
-        public int GetItemAmount(string id)
+        public ShopItem GetItem(string id)
         {
-            return _itemDict[id].Amount;
+            return _itemDict[id];
         }
     }
 
@@ -57,5 +58,13 @@ namespace SnakeWorks
         [SerializeField, TextArea] public string Description;
         [SerializeField] public int Price;
         [SerializeField] public int Amount;
+        [SerializeField] public int MaxAmount;
+
+        public event Action Purchased;
+
+        public void OnPurchase()
+        {
+            Purchased?.Invoke();
+        }
     }
 }

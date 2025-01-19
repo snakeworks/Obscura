@@ -8,6 +8,7 @@ namespace SnakeWorks
     {
         [SerializeField] private Image _iconImage;
         [SerializeField] private GameObject _unavailablePanel;
+        [SerializeField] private GameObject _maxAmountReachedPanel;
         [SerializeField] private TextMeshProUGUI _nameText;
         [SerializeField] private TextMeshProUGUI _descriptionText;
         [SerializeField] private TextMeshProUGUI _priceText;
@@ -20,23 +21,39 @@ namespace SnakeWorks
             _nameText.SetText(item.Name);
             _descriptionText.SetText(item.Description);
             _priceText.SetText(item.Price.ToString("N0"));
-            _amountText.SetText($"x{item.Amount}");
+            _maxAmountReachedPanel.SetActive(false);
+
+            UpdateAmount(item);
             _purchaseButton.onClick.AddListener(() => 
             {
                 ShopManager.Instance.Purchase(item);
-                _amountText.SetText($"x{item.Amount}");
+                UpdateAmount(item);
             });
 
             UpdateAvailability(item);
-
             PlayerManager.Instance.PointsChanged += () =>
             {
                 UpdateAvailability(item);
             };
         }
 
+        void UpdateAmount(ShopItem item)
+        {
+            _amountText.SetText($"{item.Amount}/{item.MaxAmount}");
+            if (item.Amount >= item.MaxAmount)
+            {
+                _purchaseButton.interactable = false;
+                _maxAmountReachedPanel.SetActive(true);
+            }
+        }
+
         void UpdateAvailability(ShopItem item)
         {
+            if (item.Amount >= item.MaxAmount)
+            {
+                return;
+            }
+
             if (PlayerManager.Instance.Points >= item.Price)
             {
                 _unavailablePanel.SetActive(false);
