@@ -424,7 +424,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Scan the room to detect flat surfaces.
+  m_text: 'Walk around the room to detect flat surfaces.
 
 '
   m_isRightToLeft: 0
@@ -1870,7 +1870,7 @@ MonoBehaviour:
     Description: Increases the damage of your taps by +1.
     Price: 100
     Amount: 0
-    MaxAmount: 99
+    MaxAmount: 10
   - Id: health_up
     Name: Health Up
     Icon: {fileID: 21300000, guid: f87a06fc1c8a09d4f89d5e4fcb34b82f, type: 3}
@@ -2435,8 +2435,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Tap to place down the playing field. \nMake sure the blue part is the
-    closest to the camera."
+  m_text: "Tap to place down the playing field. \nMake sure the blue part is closest
+    to the camera."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
