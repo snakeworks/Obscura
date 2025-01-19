@@ -1095,7 +1095,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1583050638}
   m_HandleRect: {fileID: 1583050637}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -1882,7 +1882,7 @@ MonoBehaviour:
     Name: Turret
     Icon: {fileID: 21300000, guid: 40aba8893ae5fc248a3487efeab620d0, type: 3}
     Description: Summons a turret that deals damage to enemies when in range.
-    Price: 1250
+    Price: 1400
     Amount: 0
     MaxAmount: 4
   _shopItemUIPrefab: {fileID: 3666541783271063298, guid: 6847912545fc0644fadd67d321773e4d,
@@ -5052,7 +5052,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 750, y: 800}
+  m_SizeDelta: {x: 750, y: 700}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2061700457
 MonoBehaviour:

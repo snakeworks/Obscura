@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da1c4bc9a09cfda45a5f3bdd0a9de3b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 18
+  _health: 25
   _damage: 10
   _pointValue: 80
   _speed: 1

@@ -19,6 +19,9 @@ namespace SnakeWorks
 
         private TextMeshProUGUI _enemyCountText => GameManager.Instance.PlayingField.EnemyCountText;
 
+        private WaitForSeconds _enemySpawnDelaySeconds;
+        private float _enemySpawnDelay = 0.8f;
+
         void Start()
         {
             GameManager.Instance.GameStateChanged += OnGameStateChanged;
@@ -35,6 +38,10 @@ namespace SnakeWorks
         void NextWave()
         {
             CurrentWave += 1;
+            _enemySpawnDelay -= 0.05f;
+            _enemySpawnDelay = Mathf.Clamp(_enemySpawnDelay, 0.3f, 1.0f);
+            _enemySpawnDelaySeconds = new(_enemySpawnDelay);
+
             _roundText.SetText(CurrentWave.ToString());
             _gameOverRoundText.SetText(_roundText.text);
             EnemiesToSpawnCount = CurrentWave * 5;
@@ -57,7 +64,7 @@ namespace SnakeWorks
         {
             for (int i = 0; i < EnemiesToSpawnCount; i++)
             {
-                yield return new WaitForSeconds(0.8f);
+                yield return _enemySpawnDelaySeconds;
 
                 var posLength = GameManager.Instance.PlayingField.EnemySpawnPositions.Length;
                 var randPosIndex = Random.Range(0, posLength);
