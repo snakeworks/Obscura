@@ -34,6 +34,11 @@ namespace SnakeWorks
 
         public void TakeDamage(int damage)
         {
+            if (_isDead)
+            {
+                return;
+            }
+
             _health -= damage;
             if (_health <= 0)
             {
@@ -84,19 +89,13 @@ namespace SnakeWorks
                 transform.localPosition.z + _speed * Time.deltaTime
             );
         }
-        
-        void DestroyEnemy()
-        {
-            Destroy(gameObject);
-            _onDeathAction?.Invoke();
-        }
 
         void OnTriggerEnter(Collider collider)
         {
             if (collider == GameManager.Instance.PlayingField.PlayerBase)
             {
                 PlayerManager.Instance.TakeDamage(_damage);
-                DestroyEnemy();
+                Die();
             }
         }
     }

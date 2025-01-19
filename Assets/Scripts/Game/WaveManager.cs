@@ -13,7 +13,8 @@ namespace SnakeWorks
         public int CurrentWave { get; private set; } = 0;
         public int EnemiesLeftCount { get; private set; }
         public int EnemiesToSpawnCount { get; private set; }
-        public int EnemiesSpawnedCount { get; private set; }
+
+        private TextMeshProUGUI _enemyCountText => GameManager.Instance.PlayingField.EnemyCountText;
 
         void Start()
         {
@@ -35,37 +36,30 @@ namespace SnakeWorks
             _gameOverRoundText.SetText(_roundText.text);
             EnemiesToSpawnCount = CurrentWave * 5;
             EnemiesLeftCount = EnemiesToSpawnCount;
-            EnemiesSpawnedCount = 0;
+            UpdateEnemyCountUI();
             StartCoroutine(SpawnEnemy());
         }
 
         IEnumerator SpawnEnemy()
         {
-            if (EnemiesSpawnedCount >= EnemiesToSpawnCount
-                || GameManager.Instance.CurrentGamestate != GameState.Playing)
+            for (int i = 0; i < EnemiesToSpawnCount; i++)
             {
-                yield break;
+                yield return new WaitForSeconds(0.8f);
+
+                var posLength = GameManager.Instance.PlayingField.EnemySpawnPositions.Length;
+                var randPosIndex = Random.Range(0, posLength);
+                var randPos = GameManager.Instance.PlayingField.EnemySpawnPositions[randPosIndex];
+                
+                var enemyBody = Instantiate(
+                    _enemyPrefab,
+                    randPos.position,
+                    randPos.rotation,
+                    GameManager.Instance.PlayingField.transform
+                ).GetComponent<EnemyBody>();
+
+                enemyBody.transform.localPosition = randPos.transform.localPosition;
+                enemyBody.Init(OnEnemyDied);
             }
-            
-            yield return new WaitForSeconds(0.8f);
-            
-            EnemiesSpawnedCount += 1;
-
-            var posLength = GameManager.Instance.PlayingField.EnemySpawnPositions.Length;
-            var randPosIndex = Random.Range(0, posLength);
-            var randPos = GameManager.Instance.PlayingField.EnemySpawnPositions[randPosIndex];
-            
-            var enemyBody = Instantiate(
-                _enemyPrefab,
-                randPos.position,
-                randPos.rotation,
-                GameManager.Instance.PlayingField.transform
-            ).GetComponent<EnemyBody>();
-
-            enemyBody.transform.localPosition = randPos.transform.localPosition;
-            enemyBody.Init(OnEnemyDied);
-
-            StartCoroutine(SpawnEnemy());
         }
 
         void OnEnemyDied()
@@ -75,10 +69,16 @@ namespace SnakeWorks
                 return;
             }
             EnemiesLeftCount -= 1;
+            UpdateEnemyCountUI();
             if (EnemiesLeftCount <= 0)
             {
                 NextWave();
             }
+        }
+
+        void UpdateEnemyCountUI()
+        {
+            _enemyCountText.SetText($"{EnemiesLeftCount}/{EnemiesToSpawnCount}");
         }
     }
 }

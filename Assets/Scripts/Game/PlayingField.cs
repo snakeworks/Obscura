@@ -12,6 +12,7 @@ namespace SnakeWorks
         [SerializeField] private Transform[] _enemySpawnPositions;
         [SerializeField] private Slider _playerHealthSlider;
         [SerializeField] private TextMeshProUGUI _playerHealthAmountText;
+        [SerializeField] private TextMeshProUGUI _enemyCountText;
 
         public GameObject Highlight => _highlight;
         public GameObject Base => _base;
@@ -19,5 +20,6 @@ namespace SnakeWorks
         public Transform[] EnemySpawnPositions => _enemySpawnPositions;
         public Slider PlayerHealthSlider => _playerHealthSlider;
         public TextMeshProUGUI PlayerHealthAmountText => _playerHealthAmountText;
+        public TextMeshProUGUI EnemyCountText => _enemyCountText;
     }
 }
