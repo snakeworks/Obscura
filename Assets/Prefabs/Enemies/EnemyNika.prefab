@@ -48,9 +48,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: 2
-  _damage: 1
-  _pointValue: 10
-  _speed: 1
+  _damage: 2
+  _pointValue: 20
+  _speed: 1.2
   _meshRenderer: {fileID: 5568549572134063409}
   _collider: {fileID: 5439249348230491102}
   _flashMaterial: {fileID: 2100000, guid: 88ec891e3ea4dc849ad9a6c2cf01c6d4, type: 2}

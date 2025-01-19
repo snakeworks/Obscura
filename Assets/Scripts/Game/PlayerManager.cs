@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -11,17 +12,29 @@ namespace SnakeWorks
 
         [SerializeField] private int _health;
         [SerializeField] private int _maxHealth = 100;
-        [SerializeField] private int _damage = 1;
         [SerializeField] private int _points = 0;
         [SerializeField] private TextMeshProUGUI _pointsText;
         [SerializeField] private TextMeshProUGUI _pointsFloatingTextPrefab;
         [SerializeField] private GameObject _gameOverScreen;
         [SerializeField] private LayerMask _enemyLayer;
         
+        public int Points => _points;
+
+        private int Damage
+        {
+            get
+            {
+                var amount = ShopManager.Instance.GetItemAmount("tap_damage");
+                return amount > 0 ? amount+1 : 1;
+            }
+        }
+
         private Slider _healthSlider => GameManager.Instance.PlayingField.PlayerHealthSlider;
         private TextMeshProUGUI _healthText => GameManager.Instance.PlayingField.PlayerHealthAmountText;
 
         private Vector2 _lastScreenPosition;
+
+        public event Action PointsChanged;
 
         void Awake()
         {
@@ -65,9 +78,14 @@ namespace SnakeWorks
         {
             _points += value;
             _pointsText.SetText(_points.ToString("N0"));
+            PointsChanged?.Invoke();
 
             TextMeshProUGUI floatingText = Instantiate(_pointsFloatingTextPrefab, _pointsText.transform);
-            floatingText.SetText($"+{value:N0}");
+            floatingText.SetText($"{(value < 0 ? "" : "+")}{value:N0}");
+            if (value < 0)
+            {
+                floatingText.color = Color.red;
+            }
             
             floatingText.transform.localPosition = new Vector3(
                 floatingText.transform.localPosition.x + 60,
@@ -76,7 +94,7 @@ namespace SnakeWorks
             );
             floatingText.transform.DOLocalMoveY(floatingText.transform.localPosition.y + 50, 0.5f)
             .SetEase(Ease.Linear)
-            .OnComplete(() => 
+            .OnComplete(() =>
             {
                 Destroy(floatingText.gameObject);
             });
@@ -101,7 +119,7 @@ namespace SnakeWorks
                 var hit = ARObjectManager.Instance.GetRaycastHit(_lastScreenPosition, _enemyLayer);
                 if (hit)
                 {
-                    hit.GetComponent<EnemyBody>().TakeDamage(_damage);
+                    hit.GetComponent<EnemyBody>().TakeDamage(Damage);
                 }
             }
         }
