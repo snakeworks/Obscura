@@ -18,7 +18,7 @@ namespace SnakeWorks
             StartCoroutine(Decay());
         }
 
-        void Update()
+        void FixedUpdate()
         {
             transform.Translate(_speed * Time.deltaTime * Vector3.forward);
         }

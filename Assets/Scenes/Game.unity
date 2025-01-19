@@ -1881,8 +1881,8 @@ MonoBehaviour:
   - Id: turret
     Name: Turret
     Icon: {fileID: 21300000, guid: 40aba8893ae5fc248a3487efeab620d0, type: 3}
-    Description: Summons a laser gun that deals damage to enemies when in range.
-    Price: 1500
+    Description: Summons a turret that deals damage to enemies when in range.
+    Price: 1250
     Amount: 0
     MaxAmount: 4
   _shopItemUIPrefab: {fileID: 3666541783271063298, guid: 6847912545fc0644fadd67d321773e4d,
@@ -3290,6 +3290,10 @@ MonoBehaviour:
   _enemyPrefabs:
   - {fileID: -5239199997964506414, guid: ebd7292e888c84f05924605e51048072, type: 3}
   - {fileID: -5239199997964506414, guid: 9597fb086cbcf1a45b33b7e640b2f890, type: 3}
+  - {fileID: -5239199997964506414, guid: 5e1e0e3c79a8e4848b3a0e579fb65b1e, type: 3}
+  - {fileID: -5239199997964506414, guid: eddb9c3742ffa034bbefaaadc94b5d71, type: 3}
+  - {fileID: -5239199997964506414, guid: 9fe5ad23bad4964479502ae51d555274, type: 3}
+  - {fileID: -5239199997964506414, guid: 32c9b7da336a33f4b8ccf30f402fd1d4, type: 3}
   _roundText: {fileID: 1006006049}
   _gameOverRoundText: {fileID: 1234629704}
 --- !u!1 &1048861011

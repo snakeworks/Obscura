@@ -11,7 +11,6 @@ namespace SnakeWorks
         [SerializeField] private int _pointValue = 10;
         [SerializeField] private float _speed = 5.0f;
         [SerializeField] private int _startingRound = 1;
-        [SerializeField] private MeshRenderer _meshRenderer;
         [SerializeField] private Collider _collider;
         [SerializeField] private Material _flashMaterial;
         [SerializeField] private Shader _dissolveShader;
@@ -21,6 +20,7 @@ namespace SnakeWorks
         public float Speed => _speed;
         public int StartingRound => _startingRound;
 
+        private MeshRenderer[] _meshRenderers;
         private Material _enemyMat;
         private WaitForSeconds _flashSeconds = new(0.03f);
 
@@ -31,7 +31,12 @@ namespace SnakeWorks
         public void Init(Action onDeathAction)
         {
             _onDeathAction = onDeathAction;
-            _enemyMat = _meshRenderer.material;
+            _meshRenderers = new MeshRenderer[transform.childCount];
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                _meshRenderers[i] = transform.GetChild(i).GetComponent<MeshRenderer>();
+            }
+            _enemyMat = _meshRenderers[0].material;
         }
 
         public void TakeDamage(int damage)
@@ -55,32 +60,51 @@ namespace SnakeWorks
 
         IEnumerator Flash()
         {
-            _meshRenderer.material = _flashMaterial;
+            SetMaterial(_flashMaterial);
             yield return _flashSeconds;
-            _meshRenderer.material = _enemyMat;
+            SetMaterial(_enemyMat);
         }
 
         void Die()
         {
             _isDead = true;
             _onDeathAction?.Invoke();
-            _meshRenderer.material = _flashMaterial;
+            SetMaterial(_flashMaterial);
             float dissolveProgress = 0.25f;
             StartCoroutine(DeathAnim());
             IEnumerator DeathAnim()
             {
-                _meshRenderer.material.shader = _dissolveShader;
+                SetMaterial(_flashMaterial, _dissolveShader);
                 while (dissolveProgress < 1.0f)
                 {
                     dissolveProgress += Time.deltaTime * 3.5f;
-                    _meshRenderer.material.SetFloat("_DissolveThreshold", dissolveProgress);
+                    SetShaderFloat("_DissolveThreshold", dissolveProgress);
                     yield return null;
                 }
                 Destroy(gameObject);
             }
         }
 
-        void Update()
+        void SetMaterial(Material material, Shader shader = null)
+        {
+            foreach (var renderer in _meshRenderers)
+            {
+                renderer.material = material;
+                if (shader != null)
+                {
+                    renderer.material.shader = shader;
+                }
+            }
+        }
+        void SetShaderFloat(string propertyName, float value)
+        {
+            foreach (var renderer in _meshRenderers)
+            {
+                renderer.material.SetFloat(propertyName, value);
+            }
+        }
+
+        void FixedUpdate()
         {
             if (_isDead)
             {
