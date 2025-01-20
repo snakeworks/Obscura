@@ -137,8 +137,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da1c4bc9a09cfda45a5f3bdd0a9de3b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 80
-  _damage: 15
+  _health: 75
+  _damage: 12
   _pointValue: 150
   _speed: 1.6
   _startingRound: 14

@@ -17,7 +17,10 @@ namespace SnakeWorks
         public int EnemiesLeftCount { get; private set; }
         public int EnemiesToSpawnCount { get; private set; }
 
+        private const int ROUND_DELAY_SECONDS = 5;
+
         private TextMeshProUGUI _enemyCountText => GameManager.Instance.PlayingField.EnemyCountText;
+        private TextMeshProUGUI _countdownText => GameManager.Instance.PlayingField.CountdownText;
 
         private WaitForSeconds _enemySpawnDelaySeconds;
         private float _enemySpawnDelay = 0.8f;
@@ -57,7 +60,19 @@ namespace SnakeWorks
                 }
             }
 
-            StartCoroutine(SpawnEnemy());
+            StartCoroutine(SpawnDelay());
+
+            IEnumerator SpawnDelay()
+            {
+                _countdownText.gameObject.SetActive(true);
+                for (int i = ROUND_DELAY_SECONDS; i > -1; i--)
+                {
+                    _countdownText.SetText(i.ToString());
+                    yield return new WaitForSeconds(1.0f);
+                }
+                _countdownText.gameObject.SetActive(false);
+                StartCoroutine(SpawnEnemy());
+            }
         }
 
         IEnumerator SpawnEnemy()

@@ -13,6 +13,7 @@ namespace SnakeWorks
         [SerializeField] private Slider _playerHealthSlider;
         [SerializeField] private TextMeshProUGUI _playerHealthAmountText;
         [SerializeField] private TextMeshProUGUI _enemyCountText;
+        [SerializeField] private TextMeshProUGUI _countdownText;
         [SerializeField] private Transform _turretsParent;
 
         public GameObject Highlight => _highlight;
@@ -21,6 +22,7 @@ namespace SnakeWorks
         public Transform[] EnemySpawnPositions => _enemySpawnPositions;
         public Slider PlayerHealthSlider => _playerHealthSlider;
         public TextMeshProUGUI PlayerHealthAmountText => _playerHealthAmountText;
+        public TextMeshProUGUI CountdownText => _countdownText;
         public TextMeshProUGUI EnemyCountText => _enemyCountText;
 
         private ShopItem _turretItem;
